@@ -7,6 +7,7 @@ import os
 
 # If the below seems too complex right now, that's OK.
 # That's why we have provided it!
+#
 class DatabaseConnection:
     DATABASE_NAME = os.getenv("DATABASE_NAME", "book_store")
     DATABASE_HOST = os.getenv("DATABASE_HOST", "localhost")
