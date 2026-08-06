@@ -14,8 +14,6 @@ app = Flask(__name__)
 def hello():
     return "Hello to you too"
 
-# NEW PART START
-
 # duplicate route
 @app.route('/hello', methods=['GET'])
 def hello_again():
