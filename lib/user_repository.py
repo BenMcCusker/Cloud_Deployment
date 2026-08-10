@@ -16,11 +16,20 @@ class UserRepository:
         return users
 
     # Find a single artist by their id
-    def find(self, user_id):
-        rows = self._connection.execute(
-            'SELECT * from users WHERE id = %s', [user_id])
-        row = rows[0]
-        return User(row["id"], row["username"], row["password"])
+    def find(self, username):
+        user_details = self._connection.execute(
+            'SELECT * from users WHERE username = %s', [username]
+            )
+
+        if len(user_details) == 0:
+            return None
+
+        user_details = user_details[0]
+        
+        return User(user_details["username"], 
+                    user_details["password"], 
+                    user_details["id"]
+                    )
 
     # Create a new artist
     # Do you want to get its id back? Look into RETURNING id;

@@ -1,0 +1,22 @@
+
+<html>
+    <head>
+        <title>Signup Page</title>
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
+    <body>
+        <h1>Signup Page</h1>
+        <ul>
+        {% for user in users %}
+            <li>{{ user.username }} by {{ user.password }}</li>
+        {% endfor %}
+        </ul>
+
+    <form method="POST" action="/users">
+        <input type="text" name="username" placeholder="Username"><br>
+        <input type="text" name="password" placeholder="Password"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    </body>
+</html>

@@ -1,14 +1,17 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from lib.database_connection import DatabaseConnection
 from lib.book_repository import BookRepository
 from lib.book import Book
 from lib.user_repository import UserRepository
 from lib.user import User
+from lib.login_required import login_required
 
 
 #
 # instantiate a Flask app object
 app = Flask(__name__)
+
+app.secret_key = "secret"
 
 # Declares a route that listens for a GET request to the path /hello
 # and a method to execute when that request comes in
@@ -24,6 +27,7 @@ def hello_again():
 # NEW PART END
 
 @app.route('/books', methods=['GET'])
+@login_required
 def get_books():
     connection = DatabaseConnection()
     connection.connect()
@@ -79,7 +83,7 @@ def get_authors():
 
 @app.route("/", methods = ["GET"])
 def index():
-    return render_template("books.html")
+    return render_template("login_form.html")
 # make the server run in response to `python app.py`
 # on port 5001 (you'll learn more about what this means later)
 # and use debug mode so that changing code restarts the app
@@ -87,6 +91,10 @@ def index():
 @app.route("/users/new", methods=['GET'])
 def user_signup_page():
     return render_template("signup_form.html")
+
+@app.route('/sessions/new', methods=['GET'])
+def get_login_form():
+    return render_template("login_form.html")
 
 @app.route("/users", methods=['POST'])
 def add_new_user():
@@ -102,7 +110,26 @@ def add_new_user():
 
     user_repository.create(user)
 
-    return redirect("/books")
+    return redirect("/sessions/new")
+
+
+@app.route('/sessions', methods=['POST'])
+def create_session():
+    connection = DatabaseConnection()
+    connection.connect()
+    user_repository = UserRepository(connection)
+
+    username = request.form["username"]
+    password = request.form["password"]
+
+    user = user_repository.find(username)
+
+    if user and user.password == password:
+        session["user_id"] = user.id
+        session["username"] = user.username
+        return redirect("/books")
+    else:
+        return redirect("/sessions/new")
 
 
 if __name__ == "__main__":

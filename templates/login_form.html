@@ -1,0 +1,30 @@
+
+<html>
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
+    <body>
+        <h1>Login Page</h1>
+        <ul>
+        {% for user in users %}
+            <li>{{ user.username }} by {{ user.password }}</li>
+        {% endfor %}
+        </ul>
+
+    <form action="/sessions" method="POST">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="password" required>
+
+        <button type="submit">Log in</button>
+    </form>
+    <form action="/users/new" method="GET">
+        <button type="submit">Sign Up</button>
+    </form>
+
+
+    </body>
+</html>
