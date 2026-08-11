@@ -38,8 +38,7 @@ jobs:
 
       - name: Seed database
         run: |
-          psql -h 127.0.0.1 -U runner book_store_test -f seeds/books.sql
-          psql -h 127.0.0.1 -U runner book_store_test -f seeds/users.sql
+          psql -h 127.0.0.1 -U runner book_store_test -f seeds/book_store_seeds.sql
 
       - name: Start web app
         run: nohup python app.py > app.log 2>&1 &
