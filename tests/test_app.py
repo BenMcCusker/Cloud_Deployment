@@ -85,3 +85,4 @@ def test_auth():
     assert response.status_code == 302
 
     assert response.headers['Location'].endswith('/sessions/new')
+
