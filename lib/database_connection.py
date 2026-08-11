@@ -9,7 +9,7 @@ import os
 # That's why we have provided it!
 #
 class DatabaseConnection:
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "book_store")
+    DATABASE_NAME = os.getenv("DATABASE_NAME", "book_store_test")
     DATABASE_HOST = os.getenv("DATABASE_HOST", "localhost")
 
     def __init__(self):
