@@ -145,6 +145,7 @@ def create_session():
     print("REAL PASSWORD: ", password)
 
     if ph.verify(user.password, password):
+        session["user_id"] = user.id
         return redirect("/books")
     else:
         return render_template(

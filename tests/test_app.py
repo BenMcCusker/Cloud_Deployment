@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from app import app
 from lib.database_connection import DatabaseConnection
+from argon2 import PasswordHasher
 
 # # a descriptive test name
 # def test_get_books_returns_a_200():
@@ -71,15 +72,19 @@ def test_auth():
 
     client = app.test_client()
 
+    ph = PasswordHasher()
+
     connection = DatabaseConnection()
     connection.connect()
 
     connection.execute('TRUNCATE TABLE users;')
 
+    hashed_password = ph.hash('1234')
+
     connection.execute("""
     INSERT INTO users (username, password)
-    VALUES ('testuser', '1234');
-""")
+    VALUES ('testuser', %s);
+""", (hashed_password,))
 
     response = client.post('/sessions', data= {
         'username': 'testuser',
