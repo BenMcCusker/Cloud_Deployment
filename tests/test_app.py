@@ -76,13 +76,19 @@ def test_auth():
 
     connection.execute('TRUNCATE TABLE users;')
 
+    connection.execute("""
+    INSERT INTO users (username, password)
+    VALUES ('testuser', '1234');
+""")
+
     response = client.post('/sessions', data= {
         'username': 'testuser',
         'password': '1234'
 
     })
+    
 
     assert response.status_code == 302
 
-    assert response.headers['Location'].endswith('/sessions/new')
+    assert response.headers['Location'].endswith('/books')
 

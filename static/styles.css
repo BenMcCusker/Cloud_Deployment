@@ -1,13 +1,216 @@
 body {
-    background-color: lightblue;
+    margin: 0;
+    font-family: Courier New, sans-serif;
+    background-color: #D3C6B4;
 }
 
-h1 {
+title {
+    color: black;
+}
+
+.jim-image {
+    height: 150;
+    width: 100;
+    position: absolute;
+    right: calc(50% - 150px);
+    top: 5;
+    z-index: 1;
+}
+
+.michael-image {
+    height: 75;
+    width: 150;
+    position: absolute;
+    left: calc(50% - 200px);
+    top: 0;
+    z-index: 1;
+}
+
+.dwight-image {
+    height: 300;
+    width: 225;
+    position: absolute;
+    left: calc(50% - 300px);
+    transform: rotate(-45deg);
+    top: 100;
+    z-index: 1;
+}
+
+.dwight-message {
+    position: relative;
+    background: white;
+    color: #222;
+    border: 3px solid #333;
+    border-radius: 15px;
+    padding: 12px 18px;
+    margin-bottom: 18px;
+    text-align: center;
+    font-family: "Courier New", monospace;
+    font-size: 16px;
     font-weight: bold;
-    color: lightsalmon;
 }
 
-img {
-    border: 2px solid black;
-    border-radius: 8px;
+/* Speech bubble tail */
+.dwight-message::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    bottom: 20px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 20px solid #333;
+}
+
+.menu-buttons {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.button {
+    -webkit-box-flex: 1 1 auto;
+    -moz-box-flex:  1 1 auto;
+    -webkit-flex:  1 1 auto;
+    -ms-flex:  1 1 auto;
+    flex:  1 1 auto;
+}
+
+.dwight-message::after {
+    content: "";
+    position: absolute;
+    left: -15px;
+    bottom: 21px;
+    width: 0;
+    height: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 18px solid white;
+}
+
+.login-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-top: 75px;
+}
+
+.login-box {
+    width: 350px;
+    background-color: white;
+    border: 10px solid #ddd;
+    border-radius: 5px;
+    padding: 25px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+}
+
+.login-box h1 {
+    font-size: 28px;
+    font-weight: 400;
+    margin: 0 0 25px 0;
+}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.signup-box {
+    width: 350px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+.signup-box h1 {
+    font-size: 28px;
+    font-weight: 400;
+    margin: 0 0 25px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+    box-sizing: border-box;
+
+    border: 1px solid #a6a6a6;
+    border-radius: 3px;
+
+    font-size: 16px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007eb9;
+    box-shadow: 0 0 3px #007eb9;
+}
+
+.login-button {
+    width: 100%;
+    height: 40px;
+
+    background-color: #4B8BBE;
+    border-radius: 3px;
+
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #A8C3A0;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: #777;
+    font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid #ddd;
+}
+
+.divider span {
+    padding: 0 10px;
+}
+
+.signup-button {
+    width: 100%;
+    height: 40px;
+
+    background-color: #f7f7f7;
+    border: 1px solid #999;
+    border-radius: 3px;
+
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-button:hover {
+    background-color: #e7e7e7;
 }

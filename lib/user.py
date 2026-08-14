@@ -1,3 +1,5 @@
+from argon2 import PasswordHasher
+
 class User:
     # We initialise with all of our attributes
     # Each column in the table should have an attribute here
@@ -17,3 +19,14 @@ class User:
     # you'll see the actual ID, Name, and Genre, which is much more useful to us humans
     def __repr__(self):
         return f"User({self.id}, {self.username}, {self.password})"
+
+
+    def encrypt_password(password):
+        ph = PasswordHasher()
+        encrypted_pass = ph.hash(password)
+        return encrypted_pass
+
+    def verify_password(self, password):
+        ph = PasswordHasher()
+        return ph.verify(password, self.password)
+        

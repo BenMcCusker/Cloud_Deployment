@@ -2,11 +2,11 @@ from playwright.sync_api import Page, expect
 from lib.database_connection import DatabaseConnection
 
 def test_has_title(page: Page):
-    page.goto("http://127.0.0.1:5001/sessions/new")
+    page.goto("http://127.0.0.1:5001/")
 
     h1 = page.locator("h1")
 
-    expect(h1).to_have_text("Login Page")
+    expect(h1).to_have_text("The Office")
 
 
 def test_contains_correct_text(page: Page):
@@ -49,6 +49,10 @@ def test_adding_new_book(page: Page):
     page.get_by_role("button", name="Log in").click()
 
     page.goto("http://localhost:5001/books")
+
+    page.get_by_role("button", name="Add book").click()
+
+    page.goto("http://localhost:5001/bookform")
 
     page.get_by_placeholder("Title").fill("BFG")
     page.get_by_placeholder("Author").fill("Roald Dahl")
@@ -93,4 +97,4 @@ def test_for_failed_auth(page: Page):
     page.get_by_placeholder("password").fill("1234")
     page.get_by_role("button", name="Log in").click()
 
-    assert page.url == "http://localhost:5001/sessions/new"
+    assert page.url == "http://localhost:5001/sessions"

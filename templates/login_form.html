@@ -1,30 +1,66 @@
-
 <html>
     <head>
         <title>Login Page</title>
         <link rel="stylesheet" href="/static/styles.css">
     </head>
+
     <body>
-        <h1>Login Page</h1>
-        <ul>
-        {% for user in users %}
-            <li>{{ user.username }} by {{ user.password }}</li>
-        {% endfor %}
-        </ul>
+        <div class="login-container">
 
-    <form action="/sessions" method="POST">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="username" required>
+            <img src="/static/jim-the-office.png" alt="Jim" class="jim-image">
+            <img src="/static/michael-scott.png" alt="Michael" class="michael-image">
+            <img src="/static/dwight-image.png" alt="Dwight" class="dwight-image">
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="password" required>
+            <div class="login-box">
+                <h1>Log in</h1>
 
-        <button type="submit">Log in</button>
-    </form>
-    <form action="/users/new" method="GET">
-        <button type="submit">Sign Up</button>
-    </form>
+                {% if error %}
+                    <div class="dwight-message">
+                        {{ error }}
+                    </div>
+                {% endif %}
 
+                <form action="/sessions" method="POST">
 
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter your username"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+
+                    <button class="login-button" type="submit">
+                        Log in
+                    </button>
+
+                </form>
+
+                <div class="divider">
+                    <span>New to the app?</span>
+                </div>
+
+                <form action="/users/new" method="GET">
+                    <button class="signup-button" type="submit">
+                        Create account
+                    </button>
+                </form>
+
+            </div>
+        </div>
     </body>
 </html>

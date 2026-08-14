@@ -16,4 +16,4 @@ class Book:
     # Instead of seeing a confusing code like <Artist object at 0x102...>, 
     # you'll see the actual ID, Name, and Genre, which is much more useful to us humans
     def __repr__(self):
-        return f"Book({self.id}, {self.title}, {self.author})"
+        return f"Book({self.title}, {self.author}, {self.id})"

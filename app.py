@@ -5,13 +5,18 @@ from lib.book import Book
 from lib.user_repository import UserRepository
 from lib.user import User
 from lib.login_required import login_required
-
+from argon2 import PasswordHasher
 
 #
 # instantiate a Flask app object
 app = Flask(__name__)
 
 app.secret_key = "secret"
+
+connection = DatabaseConnection()
+connection.connect()
+connection.seed("seeds/book_store_seeds.sql")
+
 
 # Declares a route that listens for a GET request to the path /hello
 # and a method to execute when that request comes in
@@ -83,7 +88,7 @@ def get_authors():
 
 @app.route("/", methods = ["GET"])
 def index():
-    return render_template("login_form.html")
+    return render_template("main.html")
 # make the server run in response to `python app.py`
 # on port 5001 (you'll learn more about what this means later)
 # and use debug mode so that changing code restarts the app
@@ -96,6 +101,10 @@ def user_signup_page():
 def get_login_form():
     return render_template("login_form.html")
 
+@app.route("/bookform", methods=["GET"])
+def get_book_form():
+    return render_template("book_form.html")
+
 @app.route("/users", methods=['POST'])
 def add_new_user():
 
@@ -104,9 +113,13 @@ def add_new_user():
 
     user_repository = UserRepository(connection)
 
-    user_details = request.form
+    username = request.form["username"]
+    password = request.form["password"]
 
-    user = User(username=user_details["username"], password=user_details["password"])
+    ph = PasswordHasher()
+    encrypted_pass = ph.hash(password)
+
+    user = User(username=username, password=encrypted_pass)
 
     user_repository.create(user)
 
@@ -116,6 +129,9 @@ def add_new_user():
 
 @app.route('/sessions', methods=['POST'])
 def create_session():
+
+    ph = PasswordHasher()
+
     connection = DatabaseConnection()
     connection.connect()
     user_repository = UserRepository(connection)
@@ -125,12 +141,30 @@ def create_session():
 
     user = user_repository.find(username)
 
-    if user and user.password == password:
-        session["user_id"] = user.id
-        session["username"] = user.username
+    print("DATABASE PASSWORD: ", user.password)
+    print("REAL PASSWORD: ", password)
+
+    if ph.verify(user.password, password):
         return redirect("/books")
     else:
-        return redirect("/sessions/new")
+        return render_template(
+            "login_form.html",
+            error="Incorrect username or password"
+        )
+
+@app.route('/books/<int:book_id>', methods=['GET'])
+def go_to_book_ID(book_id):
+    connection = DatabaseConnection()
+    connection.connect()
+    book_repository = BookRepository(connection)
+
+    book = book_repository.find(book_id)
+
+    if book is None:
+        return "Book not found", 404
+
+    return render_template("/single_book.html", book=book)
+
 
 
 if __name__ == "__main__":
